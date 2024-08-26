@@ -10,7 +10,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 
 // COMMON COMPONENT
 import { Container, Loader, Button } from '../../../atoms';
-import {FormRow} from '../../../molecules';
+import {FormRow, EmptyLabel} from '../../../molecules';
 
 // UTILS IMPORT
 import type {EmployeeType} from '../../../../utils/types';
@@ -63,7 +63,7 @@ const ViewEmployeePage = () => {
                 </Box>
                 <Box flex={1}>
                     <FormRow label="Cafe shop">
-                    <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{employee.cafe_shop_name}
+                        {employee.cafe_shop_name? (<><i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{employee.cafe_shop_name}</>) : <EmptyLabel/>}
                     </FormRow>
                 </Box>
             </Box>

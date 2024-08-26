@@ -10,7 +10,7 @@ import {useNavigate, Link} from 'react-router-dom';
 
 // COMMON COMPONENT
 import { Container, Loader, SearchField, Button, ConfirmModel } from '../../atoms';
-import { EmptyScreen } from '../../molecules';
+import { EmptyScreen, EmptyLabel } from '../../molecules';
 
 // UTILS IMPORT
 import type {EmployeeType} from '../../../utils/types';
@@ -82,7 +82,7 @@ const EmployeePage = () => {
                 <Grid item xs={cellWidth[2]}>Phone</Grid>
                 <Grid item xs={cellWidth[3]}>Gender</Grid>
                 <Grid item xs={cellWidth[4]}>Duration</Grid>
-                <Grid item xs={cellWidth[5]}>Cafe</Grid>
+                <Grid item xs={cellWidth[5]}>Cafe Shop</Grid>
                 <Grid item xs={cellWidth[6]} className='text-right'>Actions</Grid>
             </Grid>
             {employeeList?.length > 0  ? 
@@ -99,7 +99,7 @@ const EmployeePage = () => {
                     <Grid item xs={cellWidth[4]}>{item?.job_start_date && item?.cafe_shop_id ? getDifferenceBetweenTwoDate(item.job_start_date) : 0} day(s)
                     </Grid>
                     <Grid item xs={cellWidth[2]}>
-                        <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{item.cafe_shop_name}
+                        {item.cafe_shop_name? (<><i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{item.cafe_shop_name}</>) : <EmptyLabel/>}
                     </Grid>
                     <Grid item xs={cellWidth[5]} className='text-right'>
                         <Link to={`${PATH.ADD_EMPLOYEE_PATH}/${item.id}`}>Edit</Link>&nbsp;&nbsp;|&nbsp;&nbsp; 

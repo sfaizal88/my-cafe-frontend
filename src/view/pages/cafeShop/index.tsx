@@ -110,7 +110,7 @@ const CafeShopPage = () => {
                     confirmBtnLabel='Delete' confirmBtnEvent={() => {manageCafeShopHook.deleteCafeShopById(selectedCafeShop.id || '');setDeleteModelOpen(false);}}
                     cancelBtnLabel='Cancel' cancelBtnEvent={() => setDeleteModelOpen(false)}
                     title='Delete Cafe Shop'
-                    info={`Do you want to delete the cafe shop "${selectedCafeShop.name}"?`}
+                    info={`Are you sure you want to delete "${selectedCafeShop.name}" cafe shop? This action will also remove all associated employees?`}
                 />}
         </Container>
     )

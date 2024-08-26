@@ -107,7 +107,7 @@ const AddCafeShopPage = () => {
                 
                 <Box display="flex" flex={1}>
                     <Box flex={1}>
-                        <FormRow label="Description">
+                        <FormRow label="Description" required>
                             <TextArea 
                                 name="description" 
                                 placeholder='Enter the description' 
