@@ -13,7 +13,8 @@ import {
     GET_ALL_CAFE_SHOP_API, 
     DELETE_SHOP_CAFE_API,
     GET_CAFE_SHOP_API,
-    SUBMIT_SHOP_CAFE_API
+    CREATE_SHOP_CAFE_API,
+    UPDATE_SHOP_CAFE_API
 } from '../constants';
 
 // UTILS IMPORT
@@ -24,6 +25,17 @@ export function useCafeShopListQuery() {
     return useQuery({ 
         queryKey: queryKeys.cafeShopList, 
         queryFn: getCafeShopListAPI
+    });
+}
+
+// USE TO FETCH ALL CAFE SHOP AS OPTIONS
+export function useCafeShopOptionsQuery() {
+    return useQuery({
+        queryKey: queryKeys.cafeShopList, 
+        queryFn: getCafeShopListAPI,
+        select: ({output}) => output.map((item: CafeShopType) => ({
+            label: item.name, value: item.id
+        }))
     });
 }
 
@@ -72,7 +84,7 @@ const deleteCafeShopByIdAPI = (id: string) => {
 }
 
 // USE TO CREATE CAFE SHOP
-export function useCreateMentorMutation() {
+export function useCreateCafeShopMutation() {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: createCafeShopAPI,
@@ -85,8 +97,31 @@ export function useCreateMentorMutation() {
 // CREATE CAFE SHOP API
 const createCafeShopAPI = (data: CafeShopType) => {
     return callDataAPI({
-        url: SUBMIT_SHOP_CAFE_API,
+        url: CREATE_SHOP_CAFE_API,
         method: 'POST',
+        data: JSON.stringify(data)
+    });
+}
+
+// USE TO UPDATE CAFE SHOP
+export function useUpdateCafeShopMutation(id?: string) {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: updateCafeShopAPI,
+        onSuccess() {
+            queryClient.invalidateQueries({ queryKey: queryKeys.cafeShopList});
+            if (id) {
+                queryClient.invalidateQueries({ queryKey: queryKeys.cafeShopById(id)}); 
+            }
+        },
+    });
+}
+
+// UPDATE CAFE SHOP API
+const updateCafeShopAPI = (data: CafeShopType) => {
+    return callDataAPI({
+        url: UPDATE_SHOP_CAFE_API,
+        method: 'PUT',
         data: JSON.stringify(data)
     });
 }

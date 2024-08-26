@@ -15,7 +15,7 @@ import { Container, Loader, TextField, Button, SelectTag } from '../../../atoms'
 import {FormRow} from '../../../molecules';
 
 // UTILS IMPORT
-import type {EmployeeType, SelectOptionsType} from '../../../../utils/types';
+import type {EmployeeType} from '../../../../utils/types';
 import {GenderOptions} from '../../../../utils/constants';
 
 // ROUTER IMPORT
@@ -27,6 +27,10 @@ import schema from '../schema';
 // CUSTOME HOOK 
 import {useManageEmployeeHook} from '../useHook';
 
+// API CALL
+import {useEmployeeByIdQuery} from '../../../../api/employee';
+import {useCafeShopOptionsQuery} from '../../../../api/cafeShop';
+
 // STYLE IMPORT
 import '../styles.css';
 
@@ -34,29 +38,29 @@ const AddEmployeePage = () => {
     // PARAM
     const { id } = useParams();
 
+    // API CALL
+    const employeeByIdQuery = useEmployeeByIdQuery(id);
+    const cafeShopOptionsQuery = useCafeShopOptionsQuery();
+
     // DECLARE STATE
-    const [employee, setEmployee] = useState<EmployeeType>({} as EmployeeType);
-    const [cafeShopList, setCafeShopList] = useState<SelectOptionsType[]>([] as SelectOptionsType[]);
-    const [isLoading, setLoading] = useState<boolean>(false);
+    const [isPageLoading, setLoading] = useState<boolean>(false);
 
     // DECLARE NAVIGATE
     const navigate = useNavigate();
     const manageEmployeeHook = useManageEmployeeHook({
-        setEmployee,
         setLoading,
-        setCafeShopList
+        employeeId: id
     });
 
     // REACT HOOK FORM DECLARE
     const {control, handleSubmit, register, formState: { errors }, watch, reset} = useForm<EmployeeType>({
-        defaultValues: employee,
+        defaultValues: {} as EmployeeType,
         mode: 'onChange',
         resolver: yupResolver(schema),
     });
     const formWatchData = watch();
 
     const onSubmit = (formData: EmployeeType) => {
-        console.log(formData)
         manageEmployeeHook.saveEmployee(formData)
     }
 
@@ -65,20 +69,14 @@ const AddEmployeePage = () => {
             handleSubmit(onSubmit)()
         }
     };
-
+    
     useEffect(() => {
-        const fetchData = async () => {
-            await manageEmployeeHook.getCafeShopList();
-            if (id) {
-                const response = await manageEmployeeHook.getEmployeeById(id);
-                setEmployee(response);
-                reset(response)
-            }
-        };
-        fetchData();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        if (id && !employeeByIdQuery.isLoading) {
+            reset(employeeByIdQuery.data.output)
+        }
+    }, [employeeByIdQuery.data]);// eslint-disable-line react-hooks/exhaustive-deps
 
-    if (isLoading) return <Loader/>
+    if (isPageLoading || employeeByIdQuery.isLoading || cafeShopOptionsQuery.isLoading) return <Loader/>
 
     return (
         <Container title={id ? 'Edit Employee' : 'Create new Employee'} info="You can create / update employee details.">
@@ -142,7 +140,7 @@ const AddEmployeePage = () => {
                         <FormRow label="Cafe Shop">
                             <SelectTag 
                                 name="cafe_shop_id" 
-                                options={cafeShopList.length ? cafeShopList : []} 
+                                options={cafeShopOptionsQuery?.data ? cafeShopOptionsQuery.data : []} 
                                 value={formWatchData?.cafe_shop_id || ''} 
                                 register={register}
                                 control={control}

@@ -8,7 +8,7 @@ import {Dispatch, SetStateAction} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 // UTILS IMPORT
-import type {EmployeeType, SelectOptionsType} from '../../../utils/types';
+import type {EmployeeType} from '../../../utils/types';
 
 // ROUTER IMPORT
 import * as PATH from '../../routes/constants';
@@ -18,23 +18,26 @@ import { formValidationMessages } from '../../../utils/validationMessages';
 import useNotification from '../../../utils/notification';
 
 // API IMPORT
-import {GET_ALL_EMPLOYEE_API, GET_EMPLOYEE_API, SUBMIT_EMPLOYEE_API, DELETE_EMPLOYEE_API, GET_ALL_CAFE_SHOP_OPTIONS_API} from '../../../api/constants';
+import {
+    useDeleteEmployeeByIdMutation, 
+    useCreateEmployeeMutation,
+    useUpdateEmployeeMutation
+} from '../../../api/employee';
 
 type ManageEmployeeHookProps = {
     setLoading: Dispatch<SetStateAction<boolean>>;
-    setEmployeeList?: Dispatch<SetStateAction<EmployeeType[]>>;
-    setEmployee?: Dispatch<SetStateAction<EmployeeType>>;
-    setUnchangedEmployeeList?: Dispatch<SetStateAction<EmployeeType[]>>;
-    setCafeShopList?: Dispatch<SetStateAction<SelectOptionsType[]>>;
+    employeeId?: string
 }
 
 export function useManageEmployeeHook({
     setLoading,
-    setEmployeeList,
-    setEmployee,
-    setUnchangedEmployeeList,
-    setCafeShopList,
+    employeeId
 }: ManageEmployeeHookProps) {
+
+    // DECLARE API CALL
+    const deleteEmployeeByIdMutation = useDeleteEmployeeByIdMutation();
+    const createEmployeeMutation = useCreateEmployeeMutation();
+    const updateEmployeeMutation = useUpdateEmployeeMutation(employeeId);
 
     // NOTIFICATION
     const setNotification = useNotification();
@@ -42,107 +45,49 @@ export function useManageEmployeeHook({
     // NAVIAGTE
     const navigate = useNavigate();
 
-    const getEmployeeList = async () => {
-        try {
-            const response = await fetch(GET_ALL_EMPLOYEE_API);
-            if (!response.ok) {
-                throw new Error("Server error");
-            } else {
-                const result = await response.json();
-                setEmployeeList?.(result.data);
-                setUnchangedEmployeeList?.(result.data);
-            }
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
+    const saveEmployee = async (postData: EmployeeType) => {
+        // FORMING POST RESPONSE
+        const postResponse = {
+            onSuccess: (response: any) => {
+                if (!response.ok) {
+                    setNotification.error();
+                } else {
+                    if (postData?.id) {
+                        setNotification.success(formValidationMessages.updated);
+                    } else {
+                        setNotification.success(formValidationMessages.created);
+                    }
+                    navigate(PATH.ALL_EMPLOYEE_PATH);
+                }
+                setLoading(false);
+            },
+            onError(e: unknown) {
+                setNotification.error(e); 
+            },
+        };
+        if (postData.id) {
+            updateEmployeeMutation.mutate(formDataToAPIData(postData), postResponse);
+        } else {
+            createEmployeeMutation.mutate(formDataToAPIData(postData), postResponse);
         }
-    }
-
-    const getCafeShopList = async () => {
-        try {
-            const response = await fetch(GET_ALL_CAFE_SHOP_OPTIONS_API);
-            if (!response.ok) {
-                throw new Error("Server error");
-            } else {
-                const result = await response.json();
-                setCafeShopList?.(result.data);
-            }
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const saveEmployee = async (data: EmployeeType) => {
-        try {
-            console.log("data: ", data);
-            
-            const response = await fetch(SUBMIT_EMPLOYEE_API, {
-                method: 'POST',
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formDataToAPIData(data)),
-            });
-            if (!response.ok) {
-                throw new Error("Server error");
-            }
-            if (data?.id) {
-                setNotification.success(formValidationMessages.updated);
-            } else {
-                setNotification.success(formValidationMessages.created);
-            }
-            navigate(PATH.ALL_EMPLOYEE_PATH);
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const getEmployeeById = async (id: string) => {
-        let result = {} as EmployeeType;
-        try {
-            const response = await fetch(`${GET_EMPLOYEE_API}?id=${id}`);
-            if (!response.ok) {
-                throw new Error("Server error");
-            } else {
-                const output = await response.json();
-                result = output.data;
-            }
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
-        }
-        return result;
     }
 
     const deleteEmployeeById = async (id: string) => {
-        try {
-            console.log("id: ", id);
-            if (id) {
-                const response = await fetch(`${DELETE_EMPLOYEE_API}?id=${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
+        deleteEmployeeByIdMutation.mutate(id, {
+            onSuccess: (response: any) => {
+                // IF ERROR COMES
                 if (!response.ok) {
-                    throw new Error("Server error");
+                    setNotification.error();
                 } else {
                     setNotification.success(formValidationMessages.deleted);
-                    await getEmployeeList();
-                    navigate(PATH.ALL_EMPLOYEE_PATH);
                 }
-            }
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
-        }
+                setLoading(false);
+            },
+            onError(e: unknown) {
+                setNotification.error(e);
+                setLoading(false);
+            },
+        });
     }
 
     const formDataToAPIData = (data: EmployeeType) => {
@@ -155,10 +100,7 @@ export function useManageEmployeeHook({
     }
 
     return {
-        getEmployeeList,
         saveEmployee,
-        getEmployeeById,
         deleteEmployeeById,
-        getCafeShopList,
     }
 }

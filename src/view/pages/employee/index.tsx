@@ -23,6 +23,8 @@ import * as PATH from '../../routes/constants';
 // CUSTOME HOOK 
 import {useManageEmployeeHook} from './useHook';
 
+// API IMPORT
+import {useEmployeeListQuery} from '../../../api/employee';
 
 // STYLE IMPORT
 import './styles.css';
@@ -32,18 +34,19 @@ const EmployeePage = () => {
     // DECLARE STATE
     const [unchangedEmployeeList, setUnchangedEmployeeList] = useState<EmployeeType[]>([]);
     const [employeeList, setEmployeeList] = useState<EmployeeType[]>([]);
-    const [isLoading, setLoading] = useState<boolean>(false);
+    const [isPageLoading, setLoading] = useState<boolean>(false);
     const [searchKeyword, setSearchKeyword] = useState<string>('');
     const [selectedEmployee, setSelectedEmployee] = useState<EmployeeType>({} as EmployeeType);
     const [isDeleteModelOpen, setDeleteModelOpen] = useState<boolean>(false);
     const cellWidth = [2, 2, 2, 1, 1, 2, 2];
 
+    // DECLARE API CALL
+    const employeeListQuery = useEmployeeListQuery();
+
     // DECLARE NAVIGATE
     const navigate = useNavigate();
     const manageEmployeeHook = useManageEmployeeHook({
-        setEmployeeList,
         setLoading,
-        setUnchangedEmployeeList,
     });
 
     // GO TO SPECIFIC PAGE
@@ -60,10 +63,13 @@ const EmployeePage = () => {
     };
 
     useEffect(() => {
-        manageEmployeeHook.getEmployeeList();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        if (!employeeListQuery.isLoading) {
+            setEmployeeList?.(employeeListQuery.data.output);
+            setUnchangedEmployeeList?.(employeeListQuery.data.output);
+        }
+    }, [employeeListQuery.data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (isLoading) return <Loader/>
+    if (isPageLoading || employeeListQuery.isLoading) return <Loader/>
 
     return (
         <Container title='All Employee' info="A list of all the users in your account including their name, email and phone.">

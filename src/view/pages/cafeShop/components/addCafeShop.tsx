@@ -46,6 +46,7 @@ const AddCafeShopPage = () => {
     const navigate = useNavigate();
     const manageCafeShopHook = useManageCafeShopHook({
         setLoading,
+        cafeShopId: id
     });
 
     // REACT HOOK FORM DECLARE
@@ -67,7 +68,7 @@ const AddCafeShopPage = () => {
     };
 
     useEffect(() => {
-        if (!cafeShopByIdQuery.isLoading) {
+        if (id && !cafeShopByIdQuery.isLoading) {
             reset(cafeShopByIdQuery.data.output)
         }
     }, [cafeShopByIdQuery.data]);// eslint-disable-line react-hooks/exhaustive-deps

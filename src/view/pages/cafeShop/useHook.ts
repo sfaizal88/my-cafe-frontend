@@ -18,19 +18,26 @@ import { formValidationMessages } from '../../../utils/validationMessages';
 import useNotification from '../../../utils/notification';
 
 // API IMPORT
-import {useDeleteCafeShopByIdMutation, useCreateMentorMutation} from '../../../api/cafeShop';
+import {
+    useDeleteCafeShopByIdMutation, 
+    useCreateCafeShopMutation,
+    useUpdateCafeShopMutation
+} from '../../../api/cafeShop';
 
 type ManageCafeShopHookProps = {
     setLoading: Dispatch<SetStateAction<boolean>>;
+    cafeShopId?: string;
 }
 
 export function useManageCafeShopHook({
     setLoading,
+    cafeShopId
 }: ManageCafeShopHookProps) {
 
     // DECLARE API CALL
     const deleteCafeShopByIdMutation = useDeleteCafeShopByIdMutation();
-    const createMentorMutation = useCreateMentorMutation();
+    const createCafeShopMutation = useCreateCafeShopMutation();
+    const updateCafeShopMutation = useUpdateCafeShopMutation(cafeShopId);
 
     // NOTIFICATION
     const setNotification = useNotification();
@@ -38,14 +45,14 @@ export function useManageCafeShopHook({
     // NAVIAGTE
     const navigate = useNavigate();
 
-    const saveCafeShop = async (data: CafeShopType) => {
-        createMentorMutation.mutate(formDataToAPIData(data), {
+    const saveCafeShop = async (postData: CafeShopType) => {
+        // FORMING POST RESPONSE
+        const postResponse = {
             onSuccess: (response: any) => {
-                // IF ERROR COMES
-                if (response.code === -1) {
+                if (!response.ok) {
                     setNotification.error();
                 } else {
-                    if (data?.id) {
+                    if (postData?.id) {
                         setNotification.success(formValidationMessages.updated);
                     } else {
                         setNotification.success(formValidationMessages.created);
@@ -55,10 +62,14 @@ export function useManageCafeShopHook({
                 setLoading(false);
             },
             onError(e: unknown) {
-                setNotification.error(e);
-                setLoading(false);
+                setNotification.error(e); 
             },
-        });
+        };
+        if (postData.id) {
+            updateCafeShopMutation.mutate(formDataToAPIData(postData), postResponse);
+        } else {
+            createCafeShopMutation.mutate(formDataToAPIData(postData), postResponse);
+        }
     }
 
     const deleteCafeShopById = async (id: string) => {
