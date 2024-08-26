@@ -1,5 +1,5 @@
 /**
- * Constantd
+ * Constant
  * @author - Faizal 
  * @date - 23rd August 2024
  */

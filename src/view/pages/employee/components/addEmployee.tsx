@@ -11,12 +11,11 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 
 // COMMON COMPONENT
-import { Container, Loader, TextField, Button, TextArea, SelectTag } from '../../../atoms';
+import { Container, Loader, TextField, Button, SelectTag } from '../../../atoms';
 import {FormRow} from '../../../molecules';
 
 // UTILS IMPORT
 import type {EmployeeType, SelectOptionsType} from '../../../../utils/types';
-import {GenderEnum} from '../../../../utils/enum';
 import {GenderOptions} from '../../../../utils/constants';
 
 // ROUTER IMPORT

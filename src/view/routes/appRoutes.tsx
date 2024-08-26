@@ -6,7 +6,6 @@
  * 
  */
 // GENERIC IMPORT
-import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 // ROUTER IMPORT
@@ -28,17 +27,14 @@ import AddEmployeePage from '../pages/employee/components/addEmployee';
 import ViewEmployeePage from '../pages/employee/components/viewEmployee';
 
 const AppRoutes = () => {
-    // DECLARE STATE
-    const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
-
     // RENDER HTML
     return (
         <div className="app-container">
             <div className="left-layout">
-                <Menu {...{showMobileMenu, setShowMobileMenu}}/>
+                <Menu/>
             </div>
             <div className="right-layout">
-                <Header {...{setShowMobileMenu}}/>
+                <Header/>
                 <div className="body-content">
                     <Routes>
                         <Route path={PATH.ALL_CAFE_PATH} element={<CafeShopPage />}/>

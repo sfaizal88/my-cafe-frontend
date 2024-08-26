@@ -19,6 +19,7 @@ export const getDifferenceBetweenTwoDate = (startDateParam: string) => {
   return Math.floor(differenceInTime / (1000 * 3600 * 24)).toLocaleString();
 }
 
+// CONVERT SERVER TIME TO DISPLAY TIME
 export const convertServerDateToDisplayDate = (serverDate: string) => {
   return moment(serverDate).format('Do MMMM YYYY');
 }

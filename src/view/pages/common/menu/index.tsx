@@ -6,7 +6,7 @@
 // GENERIC IMPORT
 import clsx from 'clsx';
 import {Box} from '@mui/material';
-import {useState, useEffect, Dispatch, SetStateAction} from 'react';
+import {useState, useEffect} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 
 // ROUTER IMPORT
@@ -15,16 +15,7 @@ import * as PATH from '../../../routes/constants';
 // STYLE IMPORT
 import './styles.css';
 
-// COMPONENT PROPS
-type MenuProps = {
-    showMobileMenu: boolean;
-    setShowMobileMenu: Dispatch<SetStateAction<boolean>>;
-}
-
-const Menu = ({
-    showMobileMenu,
-    setShowMobileMenu,
-}: MenuProps) => {
+const Menu = () => {
     // LOCATION VAR
     const location = useLocation();
 
@@ -35,7 +26,6 @@ const Menu = ({
     const navigate = useNavigate();
 
     const gotoPage = (path: string) => {
-        setShowMobileMenu(false);
         navigate(path);
     }
 
@@ -56,7 +46,7 @@ const Menu = ({
     }, [currentMenu, location.pathname]);
 
     return (
-        <Box className={clsx('menu-container', !showMobileMenu && 'only-desktop')}>
+        <Box className={clsx('menu-container')}>
             <Box className='logo-container'>
                 <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;My Cafe
             </Box>

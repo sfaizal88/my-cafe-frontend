@@ -32,7 +32,6 @@ const ViewCafeShopPage = () => {
     // PARAM AND CUSTOME HOOK
     const { id } = useParams();
     const manageCafeShopHook = useManageCafeShopHook({
-        setCafeShop,
         setLoading
     });
 

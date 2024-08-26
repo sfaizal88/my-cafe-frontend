@@ -5,7 +5,6 @@
  */
 // GENERIC IMPORT
 import {Box} from '@mui/material';
-import {Dispatch, SetStateAction} from 'react';
 
 // IMAGE
 import ProfileImage from '../../../../assests/img/profile.png';
@@ -13,14 +12,7 @@ import ProfileImage from '../../../../assests/img/profile.png';
 // STYLE IMPORT
 import './styles.css';
 
-// COMPONENT PROPS
-type HeaderProps = {
-    setShowMobileMenu: Dispatch<SetStateAction<boolean>>;
-}
-
-const Header = ({
-    setShowMobileMenu
-}: HeaderProps) => {
+const Header = () => {
 
     return (
         <header>

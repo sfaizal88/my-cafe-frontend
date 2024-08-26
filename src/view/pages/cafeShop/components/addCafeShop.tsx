@@ -40,7 +40,6 @@ const AddCafeShopPage = () => {
     // DECLARE NAVIGATE
     const navigate = useNavigate();
     const manageCafeShopHook = useManageCafeShopHook({
-        setCafeShop,
         setLoading,
     });
 

@@ -10,6 +10,7 @@ export enum NotificationEnum {
     error = 'error',
 }
 
+// CHIP TYPE
 export enum ChipTypeEnum {
     success = 'success',
     info = 'info',

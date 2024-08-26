@@ -13,6 +13,7 @@ export type NotificationContextType = {
     isOpen: boolean,
 }
 
+// CAFE SHOP TYPE
 export type CafeShopType = {
     id?: string;
     name: string;
@@ -21,6 +22,7 @@ export type CafeShopType = {
     location: string;
 }
 
+// EMPLOYEE DATA TYPE
 export type EmployeeType = {
     id?: string;
     name: string;

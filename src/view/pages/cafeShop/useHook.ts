@@ -18,19 +18,17 @@ import { formValidationMessages } from '../../../utils/validationMessages';
 import useNotification from '../../../utils/notification';
 
 // API IMPORT
-import {GET_ALL_CAFE_SHOP_API, GET_CAFE_SHOP_API, SUBMIT_SHOP_CAFE_API, DELETE_SHOP_CAFE_API, GET_ALL_CAFE_SHOP_OPTIONS_API} from '../../../api/constants';
+import {GET_ALL_CAFE_SHOP_API, GET_CAFE_SHOP_API, SUBMIT_SHOP_CAFE_API, DELETE_SHOP_CAFE_API} from '../../../api/constants';
 
 type ManageCafeShopHookProps = {
     setLoading: Dispatch<SetStateAction<boolean>>;
     setCafeShopList?: Dispatch<SetStateAction<CafeShopType[]>>;
-    setCafeShop?: Dispatch<SetStateAction<CafeShopType>>;
     setUnchangedCafeShopList?: Dispatch<SetStateAction<CafeShopType[]>>;
 }
 
 export function useManageCafeShopHook({
     setLoading,
     setCafeShopList,
-    setCafeShop,
     setUnchangedCafeShopList,
 }: ManageCafeShopHookProps) {
 
