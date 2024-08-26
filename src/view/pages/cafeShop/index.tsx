@@ -4,7 +4,7 @@
  * @date - 23rd August 2024
  */
 // GENERIC IMPORT
-import {Box, Grid} from '@mui/material';
+import {Box, Grid, Tooltip} from '@mui/material';
 import {useEffect, useState} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 
@@ -92,14 +92,25 @@ const CafeShopPage = () => {
                 <Grid container className='table-row' key={`cafe-shop-list-${item.id}`}>
                     <Grid item xs={cellWidth[0]}>
                         <Box display='flex' alignItems='center'>
-                            <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{item.name}
+                            <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;
+                            <Tooltip title={item.name}>
+                                <Box className="truncate" display='inline-block'>{item.name}</Box>
+                            </Tooltip>
                         </Box>
                     </Grid>
-                    <Grid item xs={cellWidth[1]}><Box className="truncate">{item.description || <EmptyLabel/>}</Box></Grid>
+                    <Grid item xs={cellWidth[1]}>
+                        <Tooltip title={item.description}>
+                            <Box className="truncate" display='inline-block'>{item.description || <EmptyLabel/>}</Box>
+                        </Tooltip>
+                    </Grid>
                     <Grid item xs={cellWidth[2]}>
                         <i className="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;{item.total_employees?.toLocaleString() || 0}
                     </Grid>
-                    <Grid item xs={cellWidth[3]}><Box className="truncate">{item.location}</Box></Grid>
+                    <Grid item xs={cellWidth[3]}>
+                        <Tooltip title={item.location}>
+                            <Box className="truncate" display='inline-block'>{item.location}</Box>
+                        </Tooltip>
+                    </Grid>
                     <Grid item xs={cellWidth[4]} className='text-right'>
                         <Link to={`${PATH.ADD_CAFE_PATH}/${item.id}`}>Edit</Link>&nbsp;&nbsp;|&nbsp;&nbsp; 
                         <Box className='link' onClick={() => {setSelectedCafeShop(item);setDeleteModelOpen(true)}}>Delete</Box>&nbsp;&nbsp;|&nbsp;&nbsp; 

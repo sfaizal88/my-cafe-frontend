@@ -4,7 +4,7 @@
  * @date - 23rd August 2024
  */
 // GENERIC IMPORT
-import {Box, Grid} from '@mui/material';
+import {Box, Grid, Tooltip} from '@mui/material';
 import {useEffect, useState} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 
@@ -95,8 +95,11 @@ const EmployeePage = () => {
             employeeList.map(item => (
                 <Grid container className='table-row' key={`employee-list-${item.id}`}>
                     <Grid item xs={cellWidth[0]}>{item.name} ({item.id})</Grid>
-                    <Grid item xs={cellWidth[1]}>
-                        <i className="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;&nbsp;{item.email_address}
+                    <Grid item xs={cellWidth[1]} whiteSpace='nowrap' display='inline-flex' alignItems='center'>
+                        <i className="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;&nbsp;
+                        <Tooltip title={item.email_address}>
+                            <Box className="truncate" pr={2} display='inline-block' width={100}>{item.email_address}</Box>
+                        </Tooltip>
                     </Grid>
                     <Grid item xs={cellWidth[2]}>
                         <i className="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;{item.phone_number}
@@ -105,7 +108,8 @@ const EmployeePage = () => {
                     <Grid item xs={cellWidth[4]}>{item?.job_start_date && item?.cafe_shop_id ? getDifferenceBetweenTwoDate(item.job_start_date) : 0} day(s)
                     </Grid>
                     <Grid item xs={cellWidth[2]}>
-                        {item.cafe_shop_name? (<><i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{item.cafe_shop_name}</>) : <EmptyLabel/>}
+                        {item.cafe_shop_name? (<><i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;
+                            <Tooltip title={item.cafe_shop_name}><Box className="truncate" pr={2} display='inline-flex' alignItems='center' maxWidth={170}>{item.cafe_shop_name}</Box></Tooltip></>) : <EmptyLabel/>}
                     </Grid>
                     <Grid item xs={cellWidth[5]} className='text-right'>
                         <Link to={`${PATH.ADD_EMPLOYEE_PATH}/${item.id}`}>Edit</Link>&nbsp;&nbsp;|&nbsp;&nbsp; 
