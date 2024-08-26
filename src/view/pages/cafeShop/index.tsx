@@ -21,6 +21,8 @@ import * as PATH from '../../routes/constants';
 // CUSTOME HOOK 
 import {useManageCafeShopHook} from './useHook';
 
+// API IMPORT
+import {useCafeShopListQuery} from '../../../api/cafeShop';
 
 // STYLE IMPORT
 import './styles.css';
@@ -30,18 +32,19 @@ const CafeShopPage = () => {
     // DECLARE STATE
     const [unchangedCafeShopList, setUnchangedCafeShopList] = useState<CafeShopType[]>([]);
     const [cafeShopList, setCafeShopList] = useState<CafeShopType[]>([]);
-    const [isLoading, setLoading] = useState<boolean>(false);
+    const [isPageLoading, setLoading] = useState<boolean>(false);
     const [searchKeyword, setSearchKeyword] = useState<string>('');
     const [selectedCafeShop, setSelectedCafeShop] = useState<CafeShopType>({} as CafeShopType);
     const [isDeleteModelOpen, setDeleteModelOpen] = useState<boolean>(false);
     const cellWidth = [3, 3, 2, 2, 2];
 
+    // DECLARE API CALL
+    const cafeShopListQuery = useCafeShopListQuery();
+
     // DECLARE NAVIGATE
     const navigate = useNavigate();
     const manageCafeShopHook = useManageCafeShopHook({
-        setCafeShopList,
         setLoading,
-        setUnchangedCafeShopList,
     });
 
     // GO TO SPECIFIC PAGE
@@ -58,10 +61,13 @@ const CafeShopPage = () => {
     };
 
     useEffect(() => {
-        manageCafeShopHook.getCafeShopList();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        if (!cafeShopListQuery.isLoading) {
+            setCafeShopList?.(cafeShopListQuery.data.output);
+            setUnchangedCafeShopList?.(cafeShopListQuery.data.output);
+        }
+    }, [cafeShopListQuery.data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (isLoading) return <Loader/>
+    if (isPageLoading || cafeShopListQuery.isLoading) return <Loader/>
 
     return (
         <Container title='Cafe Shop' info="A list of all the cafe shop in your account including their name, location.">

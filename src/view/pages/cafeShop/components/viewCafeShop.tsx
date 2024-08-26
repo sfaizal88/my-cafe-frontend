@@ -5,48 +5,30 @@
  */
 // GENERIC IMPORT
 import {Box} from '@mui/material';
-import {useState, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 
 // COMMON COMPONENT
 import { Container, Loader, Button } from '../../../atoms';
 import {FormRow} from '../../../molecules';
 
-// UTILS IMPORT
-import type {CafeShopType} from '../../../../utils/types';
-
 // ROUTER IMPORT
 import * as PATH from '../../../routes/constants';
 
-// CUSTOME HOOK 
-import {useManageCafeShopHook} from '../useHook';
+// API CALL
+import {useCafeShopByIdQuery} from '../../../../api/cafeShop';
 
 // STYLE IMPORT
 import '../styles.css';
 
 const ViewCafeShopPage = () => {
-    // DECLARE STATE
-    const [cafeShop, setCafeShop] = useState<CafeShopType>({} as CafeShopType);
-    const [isLoading, setLoading] = useState<boolean>(true);
-
     // PARAM AND CUSTOME HOOK
     const { id } = useParams();
-    const manageCafeShopHook = useManageCafeShopHook({
-        setLoading
-    });
+
+    // API CALL
+    const {isLoading, data} = useCafeShopByIdQuery(id);
 
     // DECLARE NAVIGATE
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (id) {
-                const response = await manageCafeShopHook.getCafeShopById(id);
-                setCafeShop(response);
-            }
-        };
-        fetchData();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (isLoading) return <Loader/>
 
@@ -55,26 +37,26 @@ const ViewCafeShopPage = () => {
             <Box display='flex' flex={1} mb={1}>
                 <Box flex={1}>
                     <FormRow label="Cafe shop name">
-                        {cafeShop?.name}
+                        {data.output?.name}
                     </FormRow>
                 </Box>
             </Box>
             <Box display='flex' flex={1} mb={1}>
                 <Box flex={1}>
                     <FormRow label="Total Employees">
-                        <i className="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;{cafeShop?.total_employees || '0'}
+                        <i className="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;{data.output?.total_employees || '0'}
                     </FormRow>
                 </Box>
                 <Box flex={1}>
                     <FormRow label="Location">
-                        <i className="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;{cafeShop.location}
+                        <i className="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;{data.output.location}
                     </FormRow>
                 </Box>
             </Box>
             <Box display='flex' flex={1} mb={1}>
                 <Box flex={1}>
                     <FormRow label="Description">
-                        <Box className='flex flex-1'>{cafeShop.description}</Box>
+                        <Box className='flex flex-1'>{data.output.description}</Box>
                     </FormRow>
                 </Box>
             </Box>
@@ -83,8 +65,6 @@ const ViewCafeShopPage = () => {
                     <Button label="Back" type='button' isSecondary onClickHandler={() => navigate(PATH.ALL_CAFE_PATH)} externalClassName='mt-3 sm:mt-0'/>
                 </Box>
             </Box>
-                    
-            
         </Container>
     )
 }

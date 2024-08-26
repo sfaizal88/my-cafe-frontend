@@ -18,19 +18,19 @@ import { formValidationMessages } from '../../../utils/validationMessages';
 import useNotification from '../../../utils/notification';
 
 // API IMPORT
-import {GET_ALL_CAFE_SHOP_API, GET_CAFE_SHOP_API, SUBMIT_SHOP_CAFE_API, DELETE_SHOP_CAFE_API} from '../../../api/constants';
+import {useDeleteCafeShopByIdMutation, useCreateMentorMutation} from '../../../api/cafeShop';
 
 type ManageCafeShopHookProps = {
     setLoading: Dispatch<SetStateAction<boolean>>;
-    setCafeShopList?: Dispatch<SetStateAction<CafeShopType[]>>;
-    setUnchangedCafeShopList?: Dispatch<SetStateAction<CafeShopType[]>>;
 }
 
 export function useManageCafeShopHook({
     setLoading,
-    setCafeShopList,
-    setUnchangedCafeShopList,
 }: ManageCafeShopHookProps) {
+
+    // DECLARE API CALL
+    const deleteCafeShopByIdMutation = useDeleteCafeShopByIdMutation();
+    const createMentorMutation = useCreateMentorMutation();
 
     // NOTIFICATION
     const setNotification = useNotification();
@@ -38,91 +38,45 @@ export function useManageCafeShopHook({
     // NAVIAGTE
     const navigate = useNavigate();
 
-    const getCafeShopList = async () => {
-        try {
-            const response = await fetch(GET_ALL_CAFE_SHOP_API);
-            if (!response.ok) {
-                throw new Error("Server error");
-            } else {
-                const result = await response.json();
-                setCafeShopList?.(result.data);
-                setUnchangedCafeShopList?.(result.data);
-            }
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
-        }
-    }
-
     const saveCafeShop = async (data: CafeShopType) => {
-        try {
-            console.log("data: ", data);
-            
-            const response = await fetch(SUBMIT_SHOP_CAFE_API, {
-                method: 'POST',
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formDataToAPIData(data)),
-            });
-            if (!response.ok) {
-                throw new Error("Server error");
-            }
-            if (data?.id) {
-                setNotification.success(formValidationMessages.updated);
-            } else {
-                setNotification.success(formValidationMessages.created);
-            }
-            navigate(PATH.ALL_CAFE_PATH);
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const getCafeShopById = async (id: string) => {
-        let result = {} as CafeShopType;
-        try {
-            const response = await fetch(`${GET_CAFE_SHOP_API}?id=${id}`);
-            if (!response.ok) {
-                throw new Error("Server error");
-            } else {
-                const output = await response.json();
-                result = output.data;
-            }
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
-        }
-        return result;
+        createMentorMutation.mutate(formDataToAPIData(data), {
+            onSuccess: (response: any) => {
+                // IF ERROR COMES
+                if (response.code === -1) {
+                    setNotification.error();
+                } else {
+                    if (data?.id) {
+                        setNotification.success(formValidationMessages.updated);
+                    } else {
+                        setNotification.success(formValidationMessages.created);
+                    }
+                    navigate(PATH.ALL_CAFE_PATH);
+                }
+                setLoading(false);
+            },
+            onError(e: unknown) {
+                setNotification.error(e);
+                setLoading(false);
+            },
+        });
     }
 
     const deleteCafeShopById = async (id: string) => {
-        try {
-            console.log("id: ", id);
-            if (id) {
-                const response = await fetch(`${DELETE_SHOP_CAFE_API}?id=${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
+        deleteCafeShopByIdMutation.mutate(id, {
+            onSuccess: (response: any) => {
+                // IF ERROR COMES
                 if (!response.ok) {
-                    throw new Error("Server error");
+                    setNotification.error();
                 } else {
                     setNotification.success(formValidationMessages.deleted);
-                    await getCafeShopList();
-                    navigate(PATH.ALL_CAFE_PATH);
                 }
-            }
-        } catch (error) {
-            setNotification.error();
-        } finally {
-            setLoading(false);
-        }
+                setLoading(false);
+            },
+            onError(e: unknown) {
+                setNotification.error(e);
+                setLoading(false);
+            },
+        });
     }
 
     const formDataToAPIData = (data: CafeShopType) => {
@@ -135,9 +89,7 @@ export function useManageCafeShopHook({
     }
 
     return {
-        getCafeShopList,
         saveCafeShop,
-        getCafeShopById,
         deleteCafeShopById,
     }
 }

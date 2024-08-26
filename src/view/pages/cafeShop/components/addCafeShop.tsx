@@ -26,6 +26,9 @@ import schema from '../schema';
 // CUSTOME HOOK 
 import {useManageCafeShopHook} from '../useHook';
 
+// API CALL
+import {useCafeShopByIdQuery} from '../../../../api/cafeShop';
+
 // STYLE IMPORT
 import '../styles.css';
 
@@ -33,8 +36,10 @@ const AddCafeShopPage = () => {
     // PARAM
     const { id } = useParams();
 
+    // API CALL
+    const cafeShopByIdQuery = useCafeShopByIdQuery(id);
+
     // DECLARE STATE
-    const [cafeShop, setCafeShop] = useState<CafeShopType>({} as CafeShopType);
     const [isLoading, setLoading] = useState<boolean>(false);
 
     // DECLARE NAVIGATE
@@ -45,7 +50,7 @@ const AddCafeShopPage = () => {
 
     // REACT HOOK FORM DECLARE
     const {control, handleSubmit, register, formState: { errors }, watch, reset} = useForm<CafeShopType>({
-        defaultValues: cafeShop,
+        defaultValues: {} as CafeShopType,
         mode: 'onChange',
         resolver: yupResolver(schema),
     });
@@ -62,17 +67,12 @@ const AddCafeShopPage = () => {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (id) {
-                const response = await manageCafeShopHook.getCafeShopById(id);
-                setCafeShop(response);
-                reset(response)
-            }
-        };
-        fetchData();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        if (!cafeShopByIdQuery.isLoading) {
+            reset(cafeShopByIdQuery.data.output)
+        }
+    }, [cafeShopByIdQuery.data]);// eslint-disable-line react-hooks/exhaustive-deps
 
-    if (isLoading) return <Loader/>
+    if (isLoading || cafeShopByIdQuery.isLoading) return <Loader/>
 
     return (
         <Container title={id ? 'Edit Cafe Shop' : 'Create new Cafe Shop'} info="You can create / update cafe shop details.">

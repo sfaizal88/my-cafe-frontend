@@ -5,6 +5,7 @@
  */
 // GENERIC IMPORT
 import {useState} from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // GENERIC COMPONENT IMPORT
 import {Notification} from './view/molecules';
@@ -30,14 +31,19 @@ function App() {
     isOpen: false,
   });
 
+  // TANSTACK QUERY
+  const queryClient = new QueryClient();
+
   // GENERAL DECLARE VARIABLE
   const value = { notification, setNotification };
 
   return (
-    <NotificationContext.Provider value={value}>
-      <EntryRoutes/>
-      <Notification {...value.notification} setNotification={setNotification}/>
-    </NotificationContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <NotificationContext.Provider value={value}>
+        <EntryRoutes/>
+        <Notification {...value.notification} setNotification={setNotification}/>
+      </NotificationContext.Provider>
+    </QueryClientProvider>
   );
 }
 
