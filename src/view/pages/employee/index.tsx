@@ -96,7 +96,7 @@ const EmployeePage = () => {
                         <i className="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;{item.phone_number}
                     </Grid>
                     <Grid item xs={cellWidth[3]}>{GenderOptions.find(gender => gender.value === item.gender)?.label || ''}</Grid>
-                    <Grid item xs={cellWidth[4]}>{item?.job_start_date ? getDifferenceBetweenTwoDate(item.job_start_date) : 0} day(s)
+                    <Grid item xs={cellWidth[4]}>{item?.job_start_date && item?.cafe_shop_id ? getDifferenceBetweenTwoDate(item.job_start_date) : 0} day(s)
                     </Grid>
                     <Grid item xs={cellWidth[2]}>
                         <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{item.cafe_shop_name}

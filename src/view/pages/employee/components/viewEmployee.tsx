@@ -62,8 +62,8 @@ const ViewEmployeePage = () => {
                     </FormRow>
                 </Box>
                 <Box flex={1}>
-                    <FormRow label="Shop details">
-                        <Box className='flex flex-1'>{employee.name}</Box>
+                    <FormRow label="Cafe shop">
+                    <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{employee.cafe_shop_name}
                     </FormRow>
                 </Box>
             </Box>
@@ -81,20 +81,13 @@ const ViewEmployeePage = () => {
             </Box>
             <Box display='flex' flex={1} mb={1}>
                 <Box flex={1}>
-                    <FormRow label="Cafe shop">
+                    <FormRow label="Gender">
                         {GenderOptions.find(gender => gender.value === employee.gender)?.label || ''}
                     </FormRow>
                 </Box>
                 <Box flex={1}>
                     <FormRow label="Duration">
-                        {employee?.job_start_date ? getDifferenceBetweenTwoDate(employee.job_start_date) : 0} day(s)
-                    </FormRow>
-                </Box>
-            </Box>
-            <Box display='flex' flex={1} mb={1}>
-                <Box flex={1}>
-                    <FormRow label="Cafe shop">
-                    <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;{employee.cafe_shop_name}
+                        {employee?.job_start_date && employee?.cafe_shop_id ? getDifferenceBetweenTwoDate(employee.job_start_date) : 0} day(s)
                     </FormRow>
                 </Box>
             </Box>
