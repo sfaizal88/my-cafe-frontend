@@ -1,0 +1,45 @@
+/**
+ * Model style
+ * @author - Faizal
+ * @date - 23rd August 2024
+ */
+.model-layover {
+    background: rgba(0, 0, 0, .6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: auto;
+}
+.model-box {
+    background: #fff;
+    border-radius: 4px;
+    max-width: 300px;
+}
+.model-header {
+    padding: 8px 16px;
+    font-size: 12px;
+    background: #eeeeee;
+    border-radius: 4px 4px 0 0;
+    font-weight: bold;
+}
+.model-content {
+    padding: 16px 32px;
+    font-size: 11px;
+    text-align: center;
+    color: #707070;
+}
+.model-btn-container {
+    padding: 8px;
+    background: #eeeeee;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+}

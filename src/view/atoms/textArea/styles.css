@@ -1,0 +1,14 @@
+/**
+ * Textz area style file
+ * @author - Faizal
+ * @date - 23rd August 2024
+ */
+ .input-field {
+    border: 1px solid #c4c4c4;
+    width: 100%;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 12px;
+ }

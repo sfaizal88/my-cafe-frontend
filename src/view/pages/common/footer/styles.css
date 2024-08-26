@@ -1,0 +1,11 @@
+/**
+ * Footer style file
+ * @author - Faizal
+ * @date - 23rd August 2024
+ */
+ footer {
+    font-size: 10px;
+    color: #7f8c8d;
+    text-align: center;
+    padding: 8px 0 16px 0;
+ }

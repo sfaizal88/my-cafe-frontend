@@ -1,0 +1,39 @@
+/**
+ * Button style file
+ * @author - Faizal
+ * @date - 23rd August 2024
+ */
+ .primary-btn {
+    background: #16a085;
+    color: #FFFFFF;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+    font-weight: normal;
+    border: 1px solid #16a085;
+}
+.primary-btn:hover {
+    color: #FFFFFF;
+    background: #1abc9c;
+    cursor: pointer;
+}
+.secondary-btn {
+    background: #fff;
+    color: #636e72;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: normal;
+    border: 1px solid #636e72;
+    margin-right: 8px;
+}
+.secondary-btn:hover {
+    color: #2d3436;
+    border: 1px solid #2d3436;
+    cursor: pointer;
+}

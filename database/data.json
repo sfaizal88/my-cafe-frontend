@@ -1,0 +1,34 @@
+{
+    "getAllCafeShop": [
+      {
+        "name": "Cafe Mocha",
+        "description": "A cozy cafe known for its rich mocha coffee and relaxing ambiance.",
+        "total_employees": 12,
+        "location": "123 Coffee Street, Bean Town",
+        "id": "1"
+      },
+      {
+        "name": "Java Junction",
+        "description": "A bustling cafe that serves a variety of espresso drinks and pastries.",
+        "total_employees": 3434,
+        "location": "456 Brew Avenue, Espresso City",
+        "id": "2"
+      },
+      {
+        "name": "Latte Lounge",
+        "description": "A trendy spot offering a wide selection of lattes and light bites.",
+        "total_employees": 8,
+        "location": "789 Latte Lane, Cappuccino District",
+        "id": "3"
+      }
+    ],
+    "getCafeShopById": 
+      {
+        "name": "Latte Lounge",
+        "description": "A trendy spot offering a wide selection of lattes and light bites.",
+        "total_employees": 8,
+        "location": "789 Latte Lane, Cappuccino District",
+        "id": "3"
+      }
+  }
+  

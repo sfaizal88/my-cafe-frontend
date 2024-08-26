@@ -1,0 +1,26 @@
+/**
+ * Container style file
+ * @author - Faizal
+ * @date - 23rd August 2024
+ */
+ .main-container {
+    border: 1px solid #ecf0f1;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 12px 16px;
+    display: block;
+    background-color: #fff;
+ }
+ .container-title {
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ecf0f1;
+    margin-bottom: 12px;
+ }
+ .container-info {
+    font-size: 10px;
+    font-weight: normal;
+    color: #7f8c8d;
+    padding-top: 2px;
+ }

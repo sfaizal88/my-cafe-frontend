@@ -1,0 +1,22 @@
+/**
+ * Text field style file
+ * @author - Faizal
+ * @date - 23rd August 2024
+ */
+ .input-field {
+    border: 1px solid #c4c4c4;
+    width: 100%;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    font-size: 12px;
+ }
+ .error-field {
+   border: 1px solid #d32f2f;
+ }
+ .error-box {
+   color: #d32f2f;
+   font-size: 10px;
+ }

@@ -1,0 +1,26 @@
+/**
+ * 
+ * Notification style
+ * @author - Faizal 
+ * @date - 23rd August 2024
+ * 
+ */
+.notification-alert {
+    min-width: 200px;
+    max-width: 90%;
+}
+.show-notification {
+    display: flex !important;
+}
+.notify-container {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+    display: none;
+    transition: all 2s linear;
+}

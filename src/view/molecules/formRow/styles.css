@@ -1,0 +1,29 @@
+/**
+ * Form row style file
+ * @author - Faizal
+ * @date - 23rd August 2024
+ */
+ .field-set {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 12px 12px 0 0;
+    justify-content: flex-end;
+}
+.required {
+    color: #FA777C;
+    font-size: 15;
+}
+.field-label {
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 135;
+    padding: 0 16px 4px 0;
+    display: flex;
+}
+.field {
+    flex: 1;
+    color: #5e5e5e;
+    font-weight: 500;
+    font-size: 11px;
+};

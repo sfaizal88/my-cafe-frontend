@@ -1,0 +1,49 @@
+/**
+ * Menu style file
+ * @author - Faizal
+ * @date - 24th August 2024
+ */
+.menu-container {
+    width: 180px;
+    background-color: #2c3e50;
+    padding: 0;
+    position: none;
+    height: 100%;
+    color: #fff;
+}
+.logo-container {
+    width: 100%;
+    text-align: center;
+    background-color: #34495e;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: "Rajdhani", sans-serif;
+}
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0 0;
+}
+.menu-list li {
+    padding: 8px 16px;
+    font-size: 12px;
+}
+.menu-list li:hover, .menu-list li.active-menu {
+    background-color: #34495e;
+    cursor: pointer;
+}
+.menu-list li i {
+    margin-right: 4px
+}
+
+@media (max-width: 640px) {
+    .menu-container {
+        width: 100%;
+        background-color: #2c3e50;
+        color: #fff;
+        position: fixed;
+        height: 100%;
+        top: 0;
+        z-index: 9;
+    }
+}

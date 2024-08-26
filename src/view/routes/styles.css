@@ -1,0 +1,22 @@
+/**
+ * App style file
+ * @author - Faizal
+ * @date - 23rd August 2024
+ */
+ .app-container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+ }
+ .left-layout {
+   position: relative;
+   width: 180px;
+ }
+ .right-layout {
+   flex: 1;
+   background-color: #f5f6fa;
+ }
+ .body-content {
+  padding: 16px 16px;
+ }
