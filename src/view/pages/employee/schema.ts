@@ -20,9 +20,9 @@ const schema = ({datalist, employeeId}: SchemaType) =>
     name: yup.string().nullable()
     .transform((value) => value?.trim())
     .min(6, formValidationMessages.min(6))
-    .max(10, formValidationMessages.min(10))
+    .max(10, formValidationMessages.max(10))
     .required(formValidationMessages.required)
-    .matches(/^[a-zA-Z ]+$/, formValidationMessages.alphaSpace).max(50, formValidationMessages.max(50))
+    .matches(/^[a-zA-Z ]+$/, formValidationMessages.alphaSpace)
     .test('is-duplicate-name', formValidationMessages.duplicateEmployee, function(value) {
       if (!employeeId) {
         return !datalist.some((item: EmployeeType) => value && item.name.trim().toLowerCase() === value.trim().toLowerCase());

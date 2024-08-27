@@ -20,7 +20,7 @@ const schema = ({datalist, cafeShopId}: SchemaType) =>
     name: yup.string().nullable()
     .transform((value) => value?.trim())
     .min(6, formValidationMessages.min(6))
-    .max(10, formValidationMessages.min(10))
+    .max(10, formValidationMessages.max(10))
     .required(formValidationMessages.required)
     .matches(/^[a-zA-Z0-9 ]+$/, formValidationMessages.alphaNumeric)
     .test('is-duplicate', formValidationMessages.duplicateCafeShop, function(value) {
