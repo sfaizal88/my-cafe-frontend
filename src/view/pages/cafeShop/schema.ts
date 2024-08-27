@@ -8,14 +8,29 @@ import * as yup from 'yup';
 
 // UTILS IMPORT
 import {formValidationMessages} from '../../../utils/validationMessages';
+import {CafeShopType} from '../../../utils/types';
 
-const schema = 
+type SchemaType = {
+  datalist: CafeShopType[];
+  cafeShopId?: string
+}
+
+const schema = ({datalist, cafeShopId}: SchemaType) =>
   yup.object({
     name: yup.string().nullable()
     .transform((value) => value?.trim())
     .required(formValidationMessages.required)
     .matches(/^[a-zA-Z0-9 ]+$/, formValidationMessages.alphaNumeric)
-    .max(25, formValidationMessages.max(25)),
+    .max(25, formValidationMessages.max(25))
+    .test('is-duplicate', formValidationMessages.duplicateCafeShop, function(value) {
+      if (!cafeShopId) {
+        return !datalist.some((item:CafeShopType) => value && item.name.trim().toLowerCase() === value.trim().toLowerCase());
+      } else {
+          return !datalist.some((item:CafeShopType) => {
+              return value && cafeShopId !== item.id && item.name.trim().toLowerCase() === value.trim().toLowerCase()
+          });
+      }
+    }),
     location: yup.string().nullable()
     .transform((value) => value?.trim())
     .required(formValidationMessages.required)

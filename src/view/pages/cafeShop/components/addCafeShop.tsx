@@ -27,7 +27,7 @@ import schema from '../schema';
 import {useManageCafeShopHook} from '../useHook';
 
 // API CALL
-import {useCafeShopByIdQuery} from '../../../../api/cafeShop';
+import {useCafeShopByIdQuery, useCafeShopListQuery} from '../../../../api/cafeShop';
 
 // STYLE IMPORT
 import '../styles.css';
@@ -38,6 +38,7 @@ const AddCafeShopPage = () => {
 
     // API CALL
     const cafeShopByIdQuery = useCafeShopByIdQuery(id);
+    const cafeShopListQuery = useCafeShopListQuery();
 
     // DECLARE STATE
     const [isLoading, setLoading] = useState<boolean>(false);
@@ -53,7 +54,7 @@ const AddCafeShopPage = () => {
     const {control, handleSubmit, register, formState: { errors }, watch, reset} = useForm<CafeShopType>({
         defaultValues: {} as CafeShopType,
         mode: 'onChange',
-        resolver: yupResolver(schema),
+        resolver: yupResolver(schema({datalist: cafeShopListQuery?.data?.output || [], cafeShopId: id})),
     });
     const formWatchData = watch();
 

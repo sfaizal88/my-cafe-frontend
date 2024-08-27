@@ -28,7 +28,7 @@ import schema from '../schema';
 import {useManageEmployeeHook} from '../useHook';
 
 // API CALL
-import {useEmployeeByIdQuery} from '../../../../api/employee';
+import {useEmployeeByIdQuery, useEmployeeListQuery} from '../../../../api/employee';
 import {useCafeShopOptionsQuery} from '../../../../api/cafeShop';
 
 // STYLE IMPORT
@@ -41,6 +41,7 @@ const AddEmployeePage = () => {
     // API CALL
     const employeeByIdQuery = useEmployeeByIdQuery(id);
     const cafeShopOptionsQuery = useCafeShopOptionsQuery();
+    const employeeListQuery = useEmployeeListQuery();
 
     // DECLARE STATE
     const [isPageLoading, setLoading] = useState<boolean>(false);
@@ -56,7 +57,7 @@ const AddEmployeePage = () => {
     const {control, handleSubmit, register, formState: { errors }, watch, reset} = useForm<EmployeeType>({
         defaultValues: {} as EmployeeType,
         mode: 'onChange',
-        resolver: yupResolver(schema),
+        resolver: yupResolver(schema({datalist: employeeListQuery?.data?.output || [], employeeId: id})),
     });
     const formWatchData = watch();
 
