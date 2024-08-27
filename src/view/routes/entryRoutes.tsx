@@ -14,7 +14,7 @@ import * as PATH from './constants';
 
 // ENTRY ROUTER VARIABLE DECLARE
 const EntryRoutes = () => (
-  <BrowserRouter basename="/my-cafe-frontend">
+  <BrowserRouter basename="/my-cafe-frontend/">
     <Routes>
       <Route path={PATH.OTHER_PATH} element={<AppRoutes />}/>
     </Routes>
