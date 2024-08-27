@@ -19,9 +19,10 @@ const schema = ({datalist, cafeShopId}: SchemaType) =>
   yup.object({
     name: yup.string().nullable()
     .transform((value) => value?.trim())
+    .min(6, formValidationMessages.min(6))
+    .max(10, formValidationMessages.min(10))
     .required(formValidationMessages.required)
     .matches(/^[a-zA-Z0-9 ]+$/, formValidationMessages.alphaNumeric)
-    .max(25, formValidationMessages.max(25))
     .test('is-duplicate', formValidationMessages.duplicateCafeShop, function(value) {
       if (!cafeShopId) {
         return !datalist.some((item:CafeShopType) => value && item.name.trim().toLowerCase() === value.trim().toLowerCase());
@@ -38,7 +39,7 @@ const schema = ({datalist, cafeShopId}: SchemaType) =>
     description: yup.string().nullable()
     .transform((value) => value?.trim())
     .required(formValidationMessages.required)
-    .max(250, formValidationMessages.max(250)),
+    .max(256, formValidationMessages.max(250)),
   });
 
 export default schema;

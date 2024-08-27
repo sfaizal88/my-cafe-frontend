@@ -23,4 +23,5 @@ export const formValidationMessages = {
     alphaSpace: 'This field can only contain letters and spaces',
     onlyNumber: (name: string) => `${name} must be a valid number`,
     max: (val: number) => `Ensure this field has no more than ${val} characters`,
+    min: (val: number) => `Ensure this field has no less than ${val} characters`,
 };
