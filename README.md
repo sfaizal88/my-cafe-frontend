@@ -1,46 +1,153 @@
-# Getting Started with Create React App
+# Cafe Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Cafe application for managing cafes and employees, built using React.js, TypeScript, Node.js, and MySQL. The application allows users to view, add, edit, and delete cafes and employees through a simple web interface. The backend API handles data storage and retrieval, while the frontend provides an interactive user experience.
 
-## Available Scripts
+## Project Structure
 
-In the project directory, you can run:
+### Frontend
 
-### `npm start`
+- **React.js**: Used for building the user interface.
+- **TypeScript**: Provides type safety.
+- **Tanstack Query**: Manages server-state data.
+- **Material-UI**: Provides pre-built UI components and styles (Maximum used own css).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Backend
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Node.js**: Handles server-side logic.
+- **MySQL**: Used for database management.
+- **Express.js**: Framework for building the REST API.
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Cafe Management
 
-### `npm run build`
+- **List Cafes**: Displays cafes with their details.
+- **Filter by Location**: Filter cafes based on location.
+- **Add/Edit Cafe**: Form to add or edit cafe information.
+- **Delete Cafe**: Remove a cafe and its associated employees.
+- **View Cafe**: View a cafe and its associated employees details.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Employee Management
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **List Employees**: Displays employees with their details.
+- **Add/Edit Employee**: Form to add or edit employee information.
+- **Delete Employee**: Remove an employee from the database.
+- **View Employee**: View a employee and its associated cafe shop name.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup and Installation
 
-### `npm run eject`
+### Prerequisites
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Node.js v18.x or above
+- MySQL v8.x or above
+- npm (Node Package Manager)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Backend Setup
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. **Clone the Backend Repository:**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   ```bash
+   git clone https://github.com/sfaizal88/my-cafe-backend.git
+   cd my-cafe-backend
+   ```
 
-## Learn More
+2. **Setup the Database:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   - Navigate to the `database` folder and run the `db.sql` file in your MySQL database to create the required tables and database.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   - Update your MySQL database credentials in `src/config/dbConfig.js`. You can refer to the `.env` file for the original hostname, username, and password.
+
+3. **Install Backend Dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+4. **Run the Backend Server:**
+
+   ```bash
+   node server.js
+   ```
+
+   - Note the port on which the server is running.
+
+### Frontend Setup
+
+1. **Clone the Frontend Repository:**
+
+   ```bash
+   git clone https://github.com/sfaizal88/my-cafe-frontend.git
+   cd my-cafe-frontend
+   ```
+
+2. **Update API URL:**
+
+   - In the `src/api/constants.ts` file, update the API URL with the backend server's port.
+
+3. **Install Frontend Dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+4. **Run the Frontend Application:**
+
+   ```bash
+   npm run start
+   ```
+
+   - The application should now be running on `http://localhost:3000`.
+
+## API Endpoints
+
+- **GET /api/cafes/getAllCafeShop**: List cafes, optionally filter by location.
+- **GET /api/employees/getAllEmployee**: List employees, optionally filter by cafe.
+- **GET /api/cafes/getCafeShopDetailsById**: Get cafes details by Id
+- **GET /api/employees/getEmployeeDetailsById**: Get employee details by Id
+- **POST /api/cafes/createShopCafe**: Add a new cafe.
+- **POST /api/employees/createEmployee**: Add a new employee.
+- **PUT /api/cafes/updateShopCafe**: Update an existing cafe.
+- **PUT /api/employees/updateEmployee**: Update an existing employee.
+- **DELETE /api/cafes/deleteShopCafeById**: Delete a cafe and its employees.
+- **DELETE /api/employees/deleteEmployeeById**: Delete an employee.
+
+## Database Schema
+
+The database consists of two primary tables:
+
+1. **Employees**: Stores employee details such as ID, name, email, phone number, gender, and associated cafe.
+2. **Cafes**: Stores cafe details such as ID, name, description, logo, and location.
+
+## Documentation
+
+For more detailed information on the system design, please refer to the [System Design Documentation](documentation/system-design.pdf).
+
+## Screenshots
+
+## Cafe shop
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <img src="screenshot/employee-list.png" alt="Employee List" width="400"/>
+    <img src="screenshot/employee-initail-form.png" alt="Employee Initial Form" width="400"/>
+    <img src="screenshot/employee-form-error.png" alt="Employee Form Error" width="400"/>
+    <img src="screenshot/employee-delete.png" alt="Employee Delete" width="400"/>
+    <img src="screenshot/employee-edit.png" alt="Employee Edit" width="400"/>
+    <img src="screenshot/employee-view.png" alt="Employee View" width="400"/>
+</div>
+
+
+## Employee screenshot
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <img src="screenshot/cafe-shop-list.png" alt="Cafe Shop List" width="400"/>
+    <img src="screenshot/cafe-shop-initial-form.png" alt="Cafe Shop Initial Form" width="400"/>
+    <img src="screenshot/cafe-shop-form-error.png" alt="Cafe Shop Form Error" width="400"/>
+    <img src="screenshot/cafe-shop-edit.png" alt="Cafe Shop Edit" width="400"/>
+    <img src="screenshot/cafe-shop-view.png" alt="Cafe Shop View" width="400"/>
+    <img src="screenshot/cafe-shop-delete.png" alt="Cafe Shop Delete" width="400"/>
+</div>
+
+
+## Notes
+
+- Seed data is provided in the `db.sql` file.
+- Validation is handled on both frontend and backend.
+- Unsaved changes warning is implemented on the Add/Edit pages.
