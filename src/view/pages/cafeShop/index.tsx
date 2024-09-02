@@ -124,7 +124,7 @@ const CafeShopPage = () => {
                     icon={<i className="fa fa-ban" aria-hidden="true"></i>}
                 />}
                 {isDeleteModelOpen && <ConfirmModel 
-                    confirmBtnLabel='Delete' confirmBtnEvent={() => {manageCafeShopHook.deleteCafeShopById(selectedCafeShop.id || '');setDeleteModelOpen(false);}}
+                    confirmBtnLabel='Delete' confirmBtnEvent={() => {manageCafeShopHook.deleteCafeShopById(selectedCafeShop.id || '', cafeShopListQuery.refetch);setDeleteModelOpen(false);}}
                     cancelBtnLabel='Cancel' cancelBtnEvent={() => setDeleteModelOpen(false)}
                     title='Delete Cafe Shop'
                     info={`Are you sure you want to delete "${selectedCafeShop.name}" cafe shop? This action will also remove all associated employees?`}

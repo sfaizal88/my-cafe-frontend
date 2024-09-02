@@ -127,7 +127,7 @@ const EmployeePage = () => {
                     icon={<i className="fa fa-ban" aria-hidden="true"></i>}
                 />}
                 {isDeleteModelOpen && <ConfirmModel 
-                    confirmBtnLabel='Delete' confirmBtnEvent={() => {manageEmployeeHook.deleteEmployeeById(selectedEmployee.id || '');setDeleteModelOpen(false);}}
+                    confirmBtnLabel='Delete' confirmBtnEvent={() => {manageEmployeeHook.deleteEmployeeById(selectedEmployee.id || '', employeeListQuery.refetch);setDeleteModelOpen(false);}}
                     cancelBtnLabel='Cancel' cancelBtnEvent={() => setDeleteModelOpen(false)}
                     title='Delete Employee'
                     info={`Do you want to delete the employee "${selectedEmployee.name}"?`}

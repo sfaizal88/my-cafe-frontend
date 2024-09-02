@@ -3,6 +3,9 @@
  * @author - Faizal 
  * @date - 23rd August 2024
  */
+// GENERIC IMPORT
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+
 // UTILS IMPORT
 import {NotificationEnum} from './enum';
 
@@ -41,3 +44,7 @@ export type SelectOptionsType = {
     label: string | number,
     value: string | number
 }
+
+export type RefetchFunction = (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult>;

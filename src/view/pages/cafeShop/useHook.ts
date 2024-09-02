@@ -8,7 +8,7 @@ import {Dispatch, SetStateAction} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 // UTILS IMPORT
-import type {CafeShopType} from '../../../utils/types';
+import type {CafeShopType, RefetchFunction} from '../../../utils/types';
 
 // ROUTER IMPORT
 import * as PATH from '../../routes/constants';
@@ -72,7 +72,7 @@ export function useManageCafeShopHook({
         }
     }
 
-    const deleteCafeShopById = async (id: string) => {
+    const deleteCafeShopById = async (id: string, refetch?: RefetchFunction) => {
         deleteCafeShopByIdMutation.mutate(id, {
             onSuccess: (response: any) => {
                 // IF ERROR COMES
@@ -80,6 +80,7 @@ export function useManageCafeShopHook({
                     setNotification.error();
                 } else {
                     setNotification.success(formValidationMessages.deleted);
+                    refetch?.();
                 }
                 setLoading(false);
             },

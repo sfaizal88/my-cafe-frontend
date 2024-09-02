@@ -8,7 +8,7 @@ import {Dispatch, SetStateAction} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 // UTILS IMPORT
-import type {EmployeeType} from '../../../utils/types';
+import type {EmployeeType, RefetchFunction} from '../../../utils/types';
 
 // ROUTER IMPORT
 import * as PATH from '../../routes/constants';
@@ -72,7 +72,7 @@ export function useManageEmployeeHook({
         }
     }
 
-    const deleteEmployeeById = async (id: string) => {
+    const deleteEmployeeById = async (id: string, refetch?: RefetchFunction) => {
         deleteEmployeeByIdMutation.mutate(id, {
             onSuccess: (response: any) => {
                 // IF ERROR COMES
@@ -80,6 +80,7 @@ export function useManageEmployeeHook({
                     setNotification.error();
                 } else {
                     setNotification.success(formValidationMessages.deleted);
+                    refetch?.();
                 }
                 setLoading(false);
             },
