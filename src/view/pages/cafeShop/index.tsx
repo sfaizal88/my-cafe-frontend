@@ -94,13 +94,13 @@ const CafeShopPage = () => {
                         <Box display='flex' alignItems='center'>
                             <i className="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;
                             <Tooltip title={item.name}>
-                                <Box className="truncate" display='inline-block'>{item.name}</Box>
+                                <Box className="truncate" display='inline-block' maxWidth={180}>{item.name}</Box>
                             </Tooltip>
                         </Box>
                     </Grid>
                     <Grid item xs={cellWidth[1]}>
                         <Tooltip title={item.description}>
-                            <Box className="truncate" display='inline-block'>{item.description || <EmptyLabel/>}</Box>
+                            <Box className="truncate" display='inline-block' maxWidth={200}>{item.description || <EmptyLabel/>}</Box>
                         </Tooltip>
                     </Grid>
                     <Grid item xs={cellWidth[2]}>
@@ -108,7 +108,7 @@ const CafeShopPage = () => {
                     </Grid>
                     <Grid item xs={cellWidth[3]}>
                         <Tooltip title={item.location}>
-                            <Box className="truncate" display='inline-block'>{item.location}</Box>
+                            <Box className="truncate" display='inline-block' maxWidth={150}>{item.location}</Box>
                         </Tooltip>
                     </Grid>
                     <Grid item xs={cellWidth[4]} className='text-right'>

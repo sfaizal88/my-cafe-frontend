@@ -94,7 +94,10 @@ const EmployeePage = () => {
             {employeeList?.length > 0  ? 
             employeeList.map(item => (
                 <Grid container className='table-row' key={`employee-list-${item.id}`}>
-                    <Grid item xs={cellWidth[0]}>{item.name} ({item.id})</Grid>
+                    <Grid item xs={cellWidth[0]}>
+                        <Tooltip title={item.email_address}>
+                            <Box className="truncate" pr={2} display='inline-block' width={100}>{item.name}</Box>
+                        </Tooltip> ({item.id})</Grid>
                     <Grid item xs={cellWidth[1]} whiteSpace='nowrap' display='inline-flex' alignItems='center'>
                         <i className="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;&nbsp;
                         <Tooltip title={item.email_address}>
