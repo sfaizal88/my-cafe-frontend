@@ -32,7 +32,7 @@ const Notification = ({
 }: NotificationProps) => {
     useEffect(() => {
         if (isOpen) {
-            setTimeout(() => setNotification({message: '', isOpen: false, type}), 10000);
+            setTimeout(() => setNotification({message: '', isOpen: false, type}), 4000);
         }
     }, [isOpen])// eslint-disable-line react-hooks/exhaustive-deps
     
