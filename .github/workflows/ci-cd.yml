@@ -24,13 +24,13 @@ jobs:
                 node-version: '16'
 
             - name: Install all dependence
-              uses: npm install
+              run: npm install
 
             - name: Run the test
-              uses: npm run test
+              run: npm run test
 
             - name: Run the build
-              uses: npm run build
+              run: npm run build
 
     lint:
         runs-on: ubuntu-latest
@@ -46,10 +46,10 @@ jobs:
                 node-version: '16'
 
             - name: Insall dependence
-              uses: npm install
+              run: npm install
 
             - name: Run the lint
-              uses: npm run lint
+              run: npm run lint
 
 
 
