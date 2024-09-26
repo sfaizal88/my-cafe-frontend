@@ -1,6 +1,7 @@
 name: CI/CD for Cafe frontend code
 
 on: 
+    workflow_dispatch: 
     push: 
         branches: 
             - main
